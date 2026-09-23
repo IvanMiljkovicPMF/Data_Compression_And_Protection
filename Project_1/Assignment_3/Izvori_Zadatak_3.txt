@@ -1,0 +1,12 @@
+Za proučavanje algoritama i razvoj implementacije korišćeni su sledeći izvori:
+
+1. Coder Spirit – Exploring the LZ77 Algorithm
+https://blog.coderspirit.xyz/blog/2023/06/04/exploring-the-lz77-algorithm/
+
+2. GitHub – to-xibalba/lz77-algorithm
+https://github.com/to-xibalba/lz77-algorithm
+
+3. GeeksforGeeks – LZW (Lempel-Ziv-Welch) Compression Technique
+https://www.geeksforgeeks.org/computer-networks/lzw-lempel-ziv-welch-compression-technique/
+
+4. Predmetne prezentacije i knjige korišćene su kao dodatna literatura.

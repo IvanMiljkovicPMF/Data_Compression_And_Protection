@@ -1,0 +1,13 @@
+Za razvoj implementacije korišćeni su sledeći izvori:
+
+1. C++ Binary File I/O
+https://www.eecs.umich.edu/courses/eecs380/HANDOUTS/cppBinaryFileIO-1.html
+
+Iz ovog izvora korišćeni su koncepti i način rada sa binarnim fajlovima,
+uključujući ifstream, ios::binary, read(), gcount() i close().
+
+2. Za osnovne C++ konstrukcije korišćeno je:
+https://www.svetprogramiranja.com/funkcije_u_programskom_jeziku_cpp.html#uvod
+
+3. Matematička formula i postupak računanja bajt-entropije uzeti su iz
+postavke projektnog zadatka i predmetnih materijala.

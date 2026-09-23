@@ -1,0 +1,34 @@
+UPUTSTVO ZA POKRETANJE – ASSIGNMENT_1
+
+1. Otvoriti fajl Project_1.sln u programu Microsoft Visual Studio.
+
+2. U Visual Studio-u izabrati:
+   Build pa zatim Build Solution
+
+   Time se projekat prevodi i priprema za pokretanje.
+
+3. U Solution Explorer-u pronaći projekat Assignment_1.
+
+4. Kliknuti desnim klikom na projekat Assignment_1.
+
+5. Izabrati:
+   Debug pa zatim Start Without Debugging
+
+6. Program će se pokrenuti u konzolnom prozoru.
+
+7. Program očekuje ulazni binarni fajl:
+   wolf.bmp
+
+   Fajl wolf.bmp nalazi se na lokaciji sa koje program može da ga pronađe,
+   odnosno u okviru projekta tako da program može direktno da ga učita
+   prilikom pokretanja.
+
+8. Nakon pokretanja program prvo prikazuje poruku za početak rada i čeka
+   pritisak tastera Enter.
+
+9. Program zatim učitava binarni fajl u blokovima od 4096 bajtova i broji
+   koliko se puta pojavio svaki bajt od 0 do 255.
+
+10. Na kraju se u konzoli prikazuju broj pojavljivanja za svaki bajt,
+    ukupan broj pročitanih bajtova i izračunata bajt-entropija u bitovima
+    po bajtu.

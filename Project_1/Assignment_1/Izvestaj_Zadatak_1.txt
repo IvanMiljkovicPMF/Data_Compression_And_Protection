@@ -1,0 +1,138 @@
+PROJEKAT 1 – KOMPRESIJA I ZAŠTITA PODATAKA
+
+ZADATAK 1 – BAJT-ENTROPIJA
+
+1. CILJ ZADATKA
+
+Cilj prvog zadatka je implementacija programa za izračunavanje bajt-entropije binarnog fajla.
+
+Bajt-entropija predstavlja meru prosečne količine informacije po jednom bajtu na osnovu raspodele frekvencija svih mogućih vrednosti bajta. Za računanje se posmatra 256 mogućih vrednosti bajta, od 0 do 255.
+
+Za svaku vrednost bajta određuje se broj njenih pojavljivanja u ulaznom fajlu. Na osnovu broja pojavljivanja izračunava se verovatnoća svakog bajta, a zatim se na osnovu tih verovatnoća izračunava ukupna bajt-entropija.
+
+U ovom zadatku korišćen je binarni fajl "wolf.bmp". Program je za dati fajl izračunao ukupno 1.310.464 bajta.
+
+Bajt-entropija je definisana izrazom:
+
+H(p) = −p0 log2(p0) − p1 log2(p1) − ... − p255 log2(p255)
+
+Odnosno:
+
+H(p) = -Σ pi log2(pi)
+
+gde je:
+
+Ni – broj pojavljivanja bajta i,
+
+N – ukupan broj bajtova u fajlu,
+
+pi = Ni / N – verovatnoća pojavljivanja bajta i.
+
+Za vrednosti bajta koje se ne pojavljuju u fajlu važi pretpostavka:
+
+0 log2(0) = 0
+
+2. KORIŠĆENE BIBLIOTEKE
+
+Za implementaciju programa korišćene su sledeće standardne C++ biblioteke:
+
+#include <iostream>
+#include <fstream>
+#include <array>
+#include <cstdint>
+#include <iomanip>
+#include <cmath>
+
+iostream – koristi se za komunikaciju sa korisnikom i prikaz rezultata u konzoli, odnosno za korišćenje funkcija cout i cerr.
+
+fstream – koristi se za otvaranje i čitanje ulaznog fajla u binarnom režimu pomoću klase ifstream.
+
+array – koristi se za formiranje niza od 256 elemenata u kome se čuva broj pojavljivanja svake moguće vrednosti bajta.
+
+cstdint – koristi se za tip uint64_t, koji omogućava čuvanje broja pojavljivanja i ukupnog broja bajtova u celobrojnom tipu dovoljnog kapaciteta.
+
+iomanip – koristi se za formatiranje konačnog rezultata, odnosno za podešavanje broja decimalnih mesta prilikom ispisa entropije.
+
+cmath – koristi se za funkciju log2(), koja je potrebna za izračunavanje bajt-entropije.
+
+3. KOMPLETAN TOK RADA
+
+Program nakon pokretanja izvršava:
+
+1. Otvara ulazni binarni fajl "wolf.bmp".
+
+2. Proverava da li je fajl uspešno otvoren. Ukoliko fajl nije moguće otvoriti, program ispisuje poruku o grešci i završava izvršavanje.
+
+3. Formira se niz od 256 elemenata u kome svaki element predstavlja brojač za jednu moguću vrednost bajta. Na početku su svi brojači postavljeni na nulu.
+
+4. Ulazni fajl se čita u blokovima od 4096 bajtova. Na ovaj način se fajl obrađuje postepeno, umesto da se ceo sadržaj učitava odjednom.
+
+5. Za svaki pročitani bajt određuje se njegova vrednost u opsegu od 0 do 255.
+
+6. Za dobijenu vrednost bajta uvećava se odgovarajući brojač u nizu. Na ovaj način se dobija broj pojavljivanja svake od 256 mogućih vrednosti bajta.
+
+7. Nakon završetka čitanja fajla sabiraju se svi brojači. Dobijena vrednost predstavlja ukupan broj pročitanih bajtova N.
+
+8. Za svaki bajt koji se pojavljuje u fajlu izračunava se njegova verovatnoća prema formuli:
+
+pi = Ni / N
+
+9. Za svaku vrednost koja ima nenultu verovatnoću računa se njen doprinos ukupnoj entropiji:
+
+-pi log2(pi)
+
+10. Svi pojedinačni doprinosi se sabiraju i dobija se konačna vrednost bajt-entropije:
+
+H(p) = -Σ pi log2(pi)
+
+11. Program ispisuje broj pojavljivanja za svih 256 mogućih vrednosti bajta.
+
+12. Program ispisuje ukupan broj pročitanih bajtova.
+
+13. Na kraju se ispisuje izračunata bajt-entropija u jedinici bits/byte.
+
+14. REZULTATI
+
+Za ulazni fajl "wolf.bmp" program je registrovao ukupno:
+
+Total bytes read: 1310464
+
+Odnosno, ukupan broj analiziranih bajtova iznosi:
+
+N = 1.310.464 bajta
+
+Program je za svaku od 256 mogućih vrednosti bajta izračunao broj pojavljivanja. Dobijene frekvencije koriste se za računanje verovatnoća, a zatim i za izračunavanje entropije.
+
+Neke od najčešće zastupljenih vrednosti u analiziranom fajlu su:
+
+* bajt 0 – 623.556 pojavljivanja
+* bajt 62 – 56.961 pojavljivanja
+* bajt 227 – 55.558 pojavljivanja
+* bajt 231 – 48.236 pojavljivanja
+* bajt 195 – 48.615 pojavljivanja
+* bajt 60 – 48.167 pojavljivanja
+* bajt 255 – 186.039 pojavljivanja
+
+Nakon izračunavanja verovatnoća i sabiranja doprinosa svih bajtova, dobijen je rezultat:
+
+Byte Entropy: 2.944522 bits/byte
+
+Prema tome, konačna bajt-entropija analiziranog fajla iznosi:
+
+H = 2.944522 bits/byte
+
+5. ZAKLJUČAK
+
+U okviru Zadatka 1 uspešno je implementiran program za izračunavanje bajt-entropije binarnog fajla.
+
+Program određuje frekvenciju svih 256 mogućih vrednosti bajta, na osnovu tih frekvencija računa njihove verovatnoće i primenjuje Shannonovu formulu za izračunavanje entropije:
+
+H(p) = -Σ pi log2(pi)
+
+Posebno je obrađen slučaj kada se određena vrednost bajta ne pojavljuje u fajlu, pri čemu se njen doprinos entropiji smatra jednakim nuli.
+
+Za analizirani fajl "wolf.bmp" program je obradio ukupno 1.310.464 bajta i dobio konačnu bajt-entropiju:
+
+H = 2.944522 bits/byte
+
+Na taj način je realizovan postupak izračunavanja bajt-entropije na osnovu stvarne raspodele svih mogućih vrednosti bajta u binarnom fajlu.

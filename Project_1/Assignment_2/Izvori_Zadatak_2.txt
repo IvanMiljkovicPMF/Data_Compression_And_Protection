@@ -1,0 +1,30 @@
+Za proučavanje algoritama i razvoj implementacije korišćeni su sledeći izvori:
+
+1. Scribd – Shannon-Fano Coding
+https://www.scribd.com/document/414979511/sanon-fano-coding
+
+2. GeeksforGeeks – Shannon-Fano Algorithm for Data Compression
+https://www.geeksforgeeks.org/dsa/shannon-fano-algorithm-for-data-compression/
+
+3. GeeksforGeeks – Huffman Coding in C++
+https://www.geeksforgeeks.org/cpp/huffman-coding-in-cpp/
+
+4. GeeksforGeeks – Huffman Coding greedy algorithm
+https://www.geeksforgeeks.org/dsa/huffman-coding-greedy-algo-3/
+
+5. W3Schools – Huffman Coding
+https://www.w3schools.com/dsa/dsa_ref_huffman_coding.php
+
+6. GitHub – Cholewka Huffman Tree Serialization
+https://gist.github.com/Cholewka/cf17ca455cefb3684eb0dda5729a7307
+
+7. cppreference – std::basic_ofstream
+https://en.cppreference.com/cpp/io/basic_ofstream
+
+8. cppreference – std::basic_ifstream
+https://en.cppreference.com/cpp/io/basic_ifstream
+
+9. Stack Overflow – Using C++ filestreams
+https://stackoverflow.com/questions/2409504/using-c-filestreams-fstream-how-can-you-determine-the-size-of-a-file
+
+10. Predmetne prezentacije i knjige korišćene su kao dodatna literatura.

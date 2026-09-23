@@ -1,0 +1,167 @@
+PROJEKAT 1 – KOMPRESIJA I ZAŠTITA PODATAKA
+
+ZADATAK 3 – LZ77 I LZW
+
+1. CILJ ZADATKA
+
+Cilj trećeg zadatka je implementacija algoritama LZ77 i LZW za kompresiju binarnih podataka.
+
+Pored samog postupka kompresije, implementirani su i postupci za dekodiranje komprimovanih podataka, njihovo čuvanje i ponovno učitavanje, kao i provera da li je nakon dekodiranja dobijen fajl identičan originalnom fajlu.
+
+Za testiranje algoritama korišćen je tekstualni fajl "apache_loghub.log", čija veličina iznosi približno 7,83 MB. Program je preciznim čitanjem registrovao ukupno 8.219.474 bajta.
+
+Za oba algoritma se nakon kompresije određuje veličina komprimovanih podataka, compression ratio i space saving. Na taj način omogućeno je poređenje dobijenih rezultata kompresije.
+
+2. KORIŠĆENE BIBLIOTEKE
+
+Za implementaciju su korišćene standardne C++ biblioteke:
+
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <string>
+#include <unordered_map>
+#include <cstdint>
+#include <iomanip>
+
+iostream – koristi se za komunikaciju sa korisnikom i prikaz rezultata kompresije i dekodiranja u konzoli.
+
+fstream – koristi se za otvaranje, čitanje i upisivanje originalnih, komprimovanih i dekodiranih fajlova.
+
+vector – koristi se za čuvanje ulaznih i dekodiranih podataka, kao i podataka koji nastaju tokom LZ77 i LZW kompresije.
+
+string – koristi se za rad sa sekvencama podataka i tekstualnim sadržajem ulaznog fajla.
+
+unordered_map – koristi se za implementaciju LZW rečnika, koji povezuje sekvence podataka sa odgovarajućim kodovima.
+
+cstdint – koristi se za celobrojne tipove precizno definisane veličine, kao što su uint8_t, uint16_t, uint32_t i uint64_t.
+
+iomanip – koristi se za formatiranje numeričkih rezultata, posebno za prikaz compression ratio i space saving vrednosti sa određenim brojem decimalnih mesta.
+
+3. KOMPLETAN TOK RADA
+
+Program nakon pokretanja izvršava:
+
+1. Otvara i učitava ulazni fajl "apache_loghub.log".
+
+2. Određuje originalnu veličinu fajla na osnovu ukupnog broja pročitanih bajtova.
+
+3. Originalni podaci se kompresuju pomoću LZ77 algoritma.
+
+4. Dobijeni LZ77 podaci se čuvaju u fajlu "apache_loghub.lz77".
+
+5. Komprimovani LZ77 podaci se ponovo učitavaju iz fajla.
+
+6. Učitani podaci se dekodiraju pomoću LZ77 dekodera.
+
+7. Dekodirani podaci se čuvaju kao rezultat LZ77 dekodiranja.
+
+8. Dekodirani podaci se upoređuju sa originalnim podacima kako bi se proverilo da li je kompresija i dekodiranje izvršeno bez gubitka podataka.
+
+9. Na osnovu originalne i komprimovane veličine računaju se compression ratio i space saving za LZ77.
+
+10. Nakon završetka LZ77 obrade, originalni podaci se kompresuju pomoću LZW algoritma.
+
+11. Dobijeni LZW podaci se čuvaju u fajlu "apache_loghub.lzw".
+
+12. Komprimovani LZW podaci se ponovo učitavaju.
+
+13. Učitani podaci se dekodiraju pomoću LZW dekodera.
+
+14. Dekodirani LZW podaci se čuvaju kao rezultat dekodiranja.
+
+15. Dekodirani podaci se upoređuju sa originalnim podacima kako bi se proverila ispravnost LZW postupka.
+
+16. Na osnovu veličine originalnog i komprimovanog fajla računaju se compression ratio i space saving za LZW.
+
+Na ovaj način program proverava kompletan proces za oba algoritma: učitavanje originalnih podataka, kompresiju, čuvanje komprimovanih podataka, ponovno učitavanje, dekodiranje i proveru da li su dobijeni podaci identični originalnim podacima.
+
+4. REZULTATI
+
+Za testiranje je korišćen fajl:
+
+apache_loghub.log
+
+Originalna veličina fajla iznosi približno 7,83 MB, odnosno program je registrovao:
+
+Original size: 8219474 bytes
+
+Dakle, ukupno je analizirano:
+
+8.219.474 bajta
+
+LZ77
+
+Nakon LZ77 kompresije dobijeni su sledeći rezultati:
+
+LZ77 decoded correctly: YES
+
+Compressed size: 675331 bytes
+
+Compression ratio: 12.171030:1
+
+Space saving: 91.783769%
+
+Komprimovana veličina LZ77 podataka iznosi 675.331 bajt.
+
+Compression ratio iznosi:
+
+12.171030:1
+
+To znači da je originalni fajl približno 12,17 puta veći od komprimovanih LZ77 podataka.
+
+Space saving iznosi:
+
+91.783769%
+
+što predstavlja procenat prostora koji je ušteđen nakon kompresije u odnosu na originalnu veličinu fajla.
+
+Dekodiranje je uspešno provereno, što je potvrđeno rezultatom:
+
+LZ77 decoded correctly: YES
+
+Dakle, nakon dekodiranja dobijeni podaci odgovaraju originalnim podacima.
+
+LZW
+
+Nakon LZW kompresije dobijeni su sledeći rezultati:
+
+LZW decoded correctly: YES
+
+Compressed size: 1520529 bytes
+
+Compression ratio: 5.405667:1
+
+Space saving: 81.500897%
+
+Komprimovana veličina LZW podataka iznosi 1.520.529 bajta.
+
+Compression ratio iznosi:
+
+5.405667:1
+
+Space saving iznosi:
+
+81.500897%
+
+Dekodiranje je takođe uspešno provereno, što je potvrđeno rezultatom:
+
+LZW decoded correctly: YES
+
+To znači da su podaci dobijeni nakon LZW dekodiranja identični originalnim podacima.
+
+5. ZAKLJUČAK
+
+U okviru Zadatka 3 implementirani su algoritmi LZ77 i LZW za kompresiju ulaznog fajla, zajedno sa odgovarajućim postupcima za dekodiranje i proveru ispravnosti dobijenih podataka.
+
+Za testiranje je korišćen fajl "apache_loghub.log", čija originalna veličina iznosi 8.219.474 bajta, odnosno približno 7,83 MB.
+
+Kod oba algoritma izvršen je kompletan proces obrade: kompresija originalnih podataka, čuvanje komprimovanih podataka, ponovno učitavanje, dekodiranje i poređenje dekodiranih podataka sa originalnim podacima.
+
+LZ77 algoritam je dao komprimovanu veličinu od 675.331 bajta, compression ratio 12.171030:1 i space saving od 91.783769%. Dekodiranje je uspešno izvršeno i potvrđeno rezultatom "LZ77 decoded correctly: YES".
+
+LZW algoritam je dao komprimovanu veličinu od 1.520.529 bajta, compression ratio 5.405667:1 i space saving od 81.500897%. Dekodiranje je takođe uspešno izvršeno, što je potvrđeno rezultatom "LZW decoded correctly: YES".
+
+Na osnovu dobijenih rezultata može se zaključiti da su oba implementirana algoritma uspešno izvršila kompresiju i rekonstrukciju originalnih podataka bez gubitka sadržaja.
+
+Time je realizovan Zadatak 3 koji obuhvata implementaciju, čuvanje, učitavanje, dekodiranje i proveru ispravnosti LZ77 i LZW kompresije.

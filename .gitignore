@@ -1,0 +1,80 @@
+# Visual Studio
+.vs/
+**/.vs/
+
+# Visual Studio generated files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build files
+Debug/
+Release/
+x64/
+x86/
+**/Debug/
+**/Release/
+**/x64/
+**/x86/
+build/
+Build/
+build-*/
+
+# C++ object files
+*.d
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Linker / debugger files
+*.ilk
+*.pdb
+
+# Compiled libraries
+*.so
+*.dylib
+*.dll
+*.so.*
+*.a
+*.lib
+*.lai
+*.la
+
+# Executables
+*.exe
+*.out
+*.app
+
+# CMake generated files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+install_manifest.txt
+compile_commands.json
+
+# Temporary files
+*.tmp
+*.log
+*.bak
+*.swp
+
+# vcpkg
+vcpkg_installed/
+
+# Fortran module files
+*.mod
+*.smod
+
+# Debug information
+*.dwo
+
+# Test output & cache
+Testing/
+.cache/

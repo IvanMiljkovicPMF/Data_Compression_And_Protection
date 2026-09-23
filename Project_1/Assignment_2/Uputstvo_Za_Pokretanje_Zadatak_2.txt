@@ -1,0 +1,36 @@
+UPUTSTVO ZA POKRETANJE – ZADATAK 2
+
+1. Otvoriti fajl Project_1.sln u programu Microsoft Visual Studio.
+
+2. U Visual Studio-u izabrati:
+   Build pa onda Build Solution
+
+   Time se projekat prevodi i priprema za pokretanje.
+
+3. U Solution Explorer-u pronaći projekat Assignment_2.
+
+4. Kliknuti desnim klikom na projekat Assignment_2.
+
+5. Izabrati:
+   Debug pa onda Start Without Debugging
+
+6. Program će se pokrenuti u konzolnom prozoru.
+
+7. Program očekuje ulazni fajl:
+   war-peace.txt
+
+   Fajl war-peace.txt nalazi se u okviru projekta Assignment_2, tako da program može direktno da ga učita prilikom pokretanja.
+
+8. Nakon pokretanja program učitava ulazni fajl i na osnovu frekvencije pojavljivanja bajtova konstruiše Shannon-Fano i Huffmanov kod.
+
+9. Program zatim kompresuje ulazni fajl korišćenjem oba algoritma i formira fajlove:
+   shannon_fano.bin
+   huffman.bin
+
+10. Nakon kompresije program dekodira oba kompresovana fajla i formira:
+    shannon_fano_decoded.txt
+    huffman_decoded.txt
+
+11. Program proverava da li su dekodirani fajlovi identični originalnom fajlu.
+
+12. Na kraju se u konzoli prikazuju originalna veličina fajla, veličina kompresovanog fajla za Shannon-Fano, veličina kompresovanog fajla za Huffman, compression ratio, space saving, rezultat dekodiranja, provera da li su originalni i dekodirani fajl identični.

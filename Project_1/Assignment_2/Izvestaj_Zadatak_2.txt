@@ -1,0 +1,208 @@
+PROJEKAT 1 – KOMPRESIJA I ZAŠTITA PODATAKA
+
+ZADATAK 2 – SHANNON-FANO I HUFFMAN KOD
+
+1. CILJ ZADATKA
+
+Cilj drugog zadatka je implementacija Shannon-Fano i Huffmanovog algoritma za kompresiju binarnih podataka.
+
+Na osnovu frekvencije pojavljivanja svakog bajta u ulaznom fajlu konstruišu se Shannon-Fano i Huffmanov kod. Dobijeni kodovi se zatim primenjuju na ulazne podatke kako bi se izvršila kompresija.
+
+Pored samog postupka kompresije, implementirani su i postupci za čuvanje informacije potrebne za dekodiranje, ponovno učitavanje komprimovanih podataka, dekodiranje i proveru da li je nakon dekodiranja dobijen fajl identičan originalnom fajlu.
+
+Za testiranje je korišćen tekstualni fajl "war-peace.txt", čija veličina iznosi približno 3,22 MB. Program je preciznim čitanjem registrovao ukupno 3.381.962 bajta.
+
+Program prvo određuje frekvenciju pojavljivanja svakog od mogućih 256 bajtova, nakon čega konstruiše Shannon-Fano i Huffmanov kod.
+
+2. KORIŠĆENE BIBLIOTEKE
+
+Za implementaciju su korišćene standardne C++ biblioteke:
+
+#include <iostream>
+#include <fstream>
+#include <array>
+#include <vector>
+#include <string>
+#include <algorithm>
+#include <queue>
+#include <cstdint>
+#include <iomanip>
+#include <iterator>
+
+iostream – koristi se za komunikaciju sa korisnikom i prikaz rezultata kompresije i dekodiranja u konzoli.
+
+fstream – koristi se za otvaranje, čitanje i upisivanje originalnih, komprimovanih i dekodiranih fajlova.
+
+array – koristi se za čuvanje frekvencije pojavljivanja svih 256 mogućih vrednosti bajta.
+
+vector – koristi se za čuvanje ulaznih podataka, Shannon-Fano i Huffman kodova, kao i podataka koji nastaju tokom kompresije i dekodiranja.
+
+string – koristi se za predstavljanje binarnih kodova dodeljenih pojedinačnim bajtovima.
+
+algorithm – koristi se za sortiranje simbola prema njihovoj frekvenciji radi konstrukcije Shannon-Fano koda.
+
+queue – koristi se za implementaciju priority queue strukture potrebne za konstrukciju Huffmanovog stabla.
+
+cstdint – koristi se za celobrojne tipove precizno definisane veličine, kao što je uint64_t.
+
+iomanip – koristi se za formatiranje numeričkih rezultata, posebno za prikaz veličine kompresovanih fajlova, compression ratio i space saving vrednosti.
+
+iterator – koristi se prilikom učitavanja ostatka binarnih podataka iz komprimovanog fajla.
+
+Sve korišćene biblioteke pripadaju standardnoj C++ biblioteci.
+
+3. KOMPLETAN TOK RADA
+
+Program nakon pokretanja izvršava sledeće korake:
+
+1. Otvara i učitava ulazni fajl "war-peace.txt".
+
+2. Učitani podaci se čuvaju u memoriji kao niz bajtova.
+
+3. Program određuje frekvenciju pojavljivanja svakog bajta iz skupa od 256 mogućih vrednosti.
+
+4. Na osnovu dobijenih frekvencija formira se lista simbola za Shannon-Fano kodiranje.
+
+5. Simboli se sortiraju prema opadajućoj frekvenciji.
+
+6. Shannon-Fano algoritam rekurzivno deli skup simbola na dve grupe sa što približnijim ukupnim frekvencijama i dodeljuje im bitove 0 i 1.
+
+7. Na osnovu frekvencija se formira Huffmanovo stablo korišćenjem priority queue strukture.
+
+8. Huffmanovim stablom se generišu binarni kodovi za sve simbole koji se pojavljuju u ulaznom fajlu.
+
+9. Shannon-Fano kodovi se primenjuju na originalne podatke i kodirani podaci se pakuju po bitovima.
+
+10. Huffman kodovi se takođe primenjuju na originalne podatke i kodirani podaci se pakuju po bitovima.
+
+11. Za oba algoritma čuva se struktura stabla potrebna za kasnije dekodiranje.
+
+12. U komprimovanom fajlu čuvaju se veličina originalnog fajla, broj bitova koji predstavljaju stablo, broj bitova kodiranih podataka, struktura stabla i kodirani podaci.
+
+13. Shannon-Fano komprimovani podaci se čuvaju u fajlu "shannon_fano.bin".
+
+14. Huffman komprimovani podaci se čuvaju u fajlu "huffman.bin".
+
+15. Program zatim učitava komprimovane podatke i rekonstruiše stablo potrebno za dekodiranje.
+
+16. Shannon-Fano podaci se dekodiraju i rezultat se čuva u fajlu "shannon_fano_decoded.txt".
+
+17. Huffman podaci se dekodiraju i rezultat se čuva u fajlu "huffman_decoded.txt".
+
+18. Dekodirani fajlovi se porede sa originalnim fajlom bajt po bajt.
+
+19. Ako su originalni i dekodirani podaci identični, dekodiranje se smatra uspešnim.
+
+20. Na osnovu originalne veličine i veličina komprimovanih fajlova računaju se compression ratio i space saving za oba algoritma.
+
+Na ovaj način program proverava kompletan proces za oba algoritma učitavanje originalnih podataka, određivanje frekvencija, konstrukciju koda, kompresiju, čuvanje komprimovanih podataka, ponovno učitavanje, dekodiranje i proveru da li su dobijeni podaci identični originalnim podacima.
+
+4. REZULTATI
+
+Za testiranje je korišćen fajl:
+
+war-peace.txt
+
+Originalna veličina fajla iznosi:
+
+3.381.962 bajta
+
+Program je registrovao:
+
+Original file size: 3381962 bytes
+
+SHANNON-FANO
+
+Nakon Shannon-Fano kompresije dobijeni su sledeći rezultati:
+
+Decoded file is correct.
+
+Files are identical.
+
+Compressed file size: 1973950 bytes
+
+Compression ratio: 58.37%
+
+Space saving: 41.63%
+
+Komprimovana veličina Shannon-Fano podataka iznosi:
+
+1.973.950 bajta.
+
+Compression ratio iznosi:
+
+58.37%
+
+To znači da komprimovani Shannon-Fano fajl zauzima približno 58,37% veličine originalnog fajla.
+
+Space saving iznosi:
+
+41.63%
+
+što predstavlja procenat prostora koji je ušteđen nakon kompresije u odnosu na originalnu veličinu fajla.
+
+Dekodiranje je uspešno provereno, što je potvrđeno rezultatima:
+
+Decoded file is correct.
+
+Files are identical.
+
+To znači da su podaci dobijeni nakon Shannon-Fano dekodiranja identični originalnom fajlu.
+
+HUFFMAN
+
+Nakon Huffman kompresije dobijeni su sledeći rezultati:
+
+Decoded file is correct.
+
+Files are identical.
+
+Compressed file size: 1969311 bytes
+
+Compression ratio: 58.23%
+
+Space saving: 41.77%
+
+Komprimovana veličina Huffman podataka iznosi:
+
+1.969.311 bajta.
+
+Compression ratio iznosi:
+
+58.23%
+
+To znači da komprimovani Huffman fajl zauzima približno 58,23% veličine originalnog fajla.
+
+Space saving iznosi:
+
+41.77%
+
+što predstavlja procenat prostora koji je ušteđen nakon kompresije u odnosu na originalnu veličinu fajla.
+
+Dekodiranje je uspešno provereno, što je potvrđeno rezultatima:
+
+Decoded file is correct.
+
+Files are identical.
+
+To znači da su podaci dobijeni nakon Huffman dekodiranja identični originalnom fajlu.
+
+Kod oba algoritma dekodiranje je uspešno izvršeno i potvrđeno je da su dekodirani fajlovi identični originalnom fajlu.
+
+5. ZAKLJUČAK
+
+U okviru Zadatka 2 implementirani su Shannon-Fano i Huffman algoritam za kompresiju ulaznog fajla, zajedno sa odgovarajućim postupcima za čuvanje potrebnih podataka, dekodiranje i proveru ispravnosti dobijenih podataka.
+
+Za testiranje je korišćen fajl "war-peace.txt", čija originalna veličina iznosi 3.381.962 bajta.
+
+Kod oba algoritma izvršen je kompletan proces obrade: određivanje frekvencije bajtova, konstrukcija koda, kompresija originalnih podataka, čuvanje komprimovanih podataka, ponovno učitavanje, dekodiranje i poređenje dekodiranih podataka sa originalnim podacima.
+
+Shannon-Fano algoritam je dao komprimovanu veličinu od 1.973.950 bajta, compression ratio 58,37% i space saving od 41,63%.
+
+Huffman algoritam je dao komprimovanu veličinu od 1.969.311 bajta, compression ratio 58,23% i space saving od 41,77%.
+
+Za oba algoritma dekodiranje je uspešno izvršeno, a provera je pokazala da su originalni i dekodirani fajlovi identični.
+
+Na osnovu dobijenih rezultata može se zaključiti da su oba implementirana algoritma uspešno izvršila kompresiju i rekonstrukciju originalnih podataka bez gubitka sadržaja.
+
+Time je realizovan Zadatak 2 koji obuhvata konstrukciju i primenu Shannon-Fano i Huffmanovog koda, čuvanje komprimovanih podataka, dekodiranje i proveru ispravnosti dobijenih podataka.
