@@ -1,9 +1,9 @@
-UPUTSTVO ZA POKRETANJE – ASSIGNMENT_1
+UPUTSTVO ZA POKRETANJE – ZADATAK 1
 
 1. Otvoriti fajl Project_1.sln u programu Microsoft Visual Studio.
 
 2. U Visual Studio-u izabrati:
-   Build pa zatim Build Solution
+   Build pa onda Build Solution
 
    Time se projekat prevodi i priprema za pokretanje.
 
@@ -12,7 +12,7 @@ UPUTSTVO ZA POKRETANJE – ASSIGNMENT_1
 4. Kliknuti desnim klikom na projekat Assignment_1.
 
 5. Izabrati:
-   Debug pa zatim Start Without Debugging
+   Debug pa onda Start Without Debugging
 
 6. Program će se pokrenuti u konzolnom prozoru.
 

@@ -15,7 +15,7 @@ U direktorijumu `Project_1` nalaze se 3 zadatka:
 
 U svakom `Assignment` direktorijumu nalaze se fajlovi:
 
-* `Izvestaj_Zadatak_<broj>` – izveštaj za dati zadatak
+* `Izveštaj_Zadatak_<broj>` – izveštaj za dati zadatak
 * `Izvori_Zadatak_<broj>` – izvori korišćeni za izradu zadatka
 * `Uputstvo_Za_Pokretanje_Zadatak_<broj>` – uputstvo za pokretanje programa
 
@@ -24,33 +24,28 @@ U svakom `Assignment` direktorijumu nalaze se fajlovi:
 ```text
 Project_1/
 ├── Assignment_1/
-│   ├── Izvestaj_Zadatak_1
+│   ├── Izveštaj_Zadatak_1
 │   ├── Izvori_Zadatak_1
 │   └── Uputstvo_Za_Pokretanje_Zadatak_1
 │
 ├── Assignment_2/
-│   ├── Izvestaj_Zadatak_2
+│   ├── Izveštaj_Zadatak_2
 │   ├── Izvori_Zadatak_2
 │   └── Uputstvo_Za_Pokretanje_Zadatak_2
 │
 └── Assignment_3/
-    ├── Izvestaj_Zadatak_3
+    ├── Izveštaj_Zadatak_3
     ├── Izvori_Zadatak_3
     └── Uputstvo_Za_Pokretanje_Zadatak_3
 ```
 
 ## Project_2
 
-U direktorijumu `Project_2` nalaze se 4 zadatka:
+U direktorijumu `Project_2` nalaze se 1 zadatka:
 
-* `Assignment_1`
-* `Assignment_2`
-* `Assignment_3`
-* `Assignment_4`
+U `Assignment` direktorijumu nalaze se fajlovi:
 
-U svakom `Assignment` direktorijumu nalaze se fajlovi:
-
-* `Izvestaj_Zadatak_<broj>` – izveštaj za dati zadatak
+* `Izveštaj_Zadatak_<broj>` – izveštaj za dati zadatak
 * `Izvori_Zadatak_<broj>` – izvori korišćeni za izradu zadatka
 * `Uputstvo_Za_Pokretanje_Zadatak_<broj>` – uputstvo za pokretanje programa
 
@@ -58,23 +53,9 @@ U svakom `Assignment` direktorijumu nalaze se fajlovi:
 
 ```text
 Project_2/
-├── Assignment_1/
-│   ├── Izvestaj_Zadatak_1
-│   ├── Izvori_Zadatak_1
-│   └── Uputstvo_Za_Pokretanje_Zadatak_1
-│
-├── Assignment_2/
-│   ├── Izvestaj_Zadatak_2
-│   ├── Izvori_Zadatak_2
-│   └── Uputstvo_Za_Pokretanje_Zadatak_2
-│
-├── Assignment_3/
-│   ├── Izvestaj_Zadatak_3
-│   ├── Izvori_Zadatak_3
-│   └── Uputstvo_Za_Pokretanje_Zadatak_3
-│
-└── Assignment_4/
-    ├── Izvestaj_Zadatak_4
-    ├── Izvori_Zadatak_4
-    └── Uputstvo_Za_Pokretanje_Zadatak_4
+├── Assignment/
+   ├── Izveštaj_Projekta_2
+   ├── Izvori_Projekta_2
+   └── Uputstvo_Za_Pokretanje_Projekta_2
+
 ```

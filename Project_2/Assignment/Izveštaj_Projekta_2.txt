@@ -1,0 +1,442 @@
+PROJEKAT 2 – KOMPRESIJA I ZAŠTITA PODATAKA
+
+ZADATAK – LDPC KOD, DEKODIRANJE POMOĆU SINDROMA I GALLAGER B ALGORITAM
+
+
+1. CILJ ZADATKA
+
+Cilj zadatka je generisanje LDPC koda za zadate parametre, formiranje tabele sindroma i korektora, određivanje kodnog rastojanja i implementacija Gallager B algoritma za dekodiranje.
+
+Za konstrukciju LDPC koda koriste se parametri:
+
+n = 15
+n-k = 9
+wr = 5
+wc = 3
+
+Prema zahtevu zadatka, za generisanje narednih grupa redova koristi se standardni generator pseudoslučajnih brojeva sa fiksnim seed-om jednakim broju indeksa.
+
+U programu se, pored konstrukcije i prikaza matrice H, vrši:
+- generisanje tabele sindroma i korektora,
+- određivanje kodnog rastojanja,
+- Gallager B dekodiranje primljene reči,
+- pronalaženje najmanjeg broja grešaka za koji Gallager B sa pragovima th0 = th1 = 0.5 ne uspeva da izvrši uspešno dekodiranje.
+
+Za testiranje je korišćen broj indeksa:
+
+1002018
+
+
+2. KORIŠĆENE BIBLIOTEKE
+
+Za implementaciju su korišćene standardne C++ biblioteke:
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <random>
+#include <string>
+
+iostream – koristi se za unos parametara i prikaz matrice, tabele sindroma, rezultata kodnog rastojanja i Gallager B dekodiranja.
+
+vector – koristi se za predstavljanje matrice H i binarnih vektora.
+
+algorithm – koristi se za funkciju shuffle, odnosno za pseudoslučajnu permutaciju kolona.
+
+random – koristi se za generator pseudoslučajnih brojeva mt19937.
+
+string – koristi se za unos primljene binarne reči kao tekstualnog niza.
+
+
+3. LOGIKA ALGORITMA PREUZETA IZ SKRIPTE
+
+Glavna algoritamska logika programa prati odgovarajuće delove predmetne skripte „Teorija informacija i kodiranje“. Skripta daje teorijsku osnovu za kontrolnu matricu, kodno rastojanje, dekodiranje pomoću sindroma, konstrukciju LDPC koda i Gallager B algoritam. Konkretna sintaksa programa i način čuvanja podataka predstavljaju C++ implementaciju tih postupaka.
+
+
+3.1. KONTROLNA MATRICA H
+
+U delu skripte o kontrolnoj matrici koda definisano je da je H kontrolna matrica ako za svaku kodnu reč x važi:
+
+H x^T = 0^T
+
+Ovaj uslov omogućava proveru da li je dati binarni vektor kodna reč.
+
+U programu se to realizuje funkcijom:
+
+bool isCodeword(...)
+
+Funkcija za svaki red matrice H računa zbir odgovarajućih elemenata vektora x po modulu 2. Ako su sve kontrolne jednačine zadovoljene, funkcija vraća da je vektor kodna reč.
+
+LOGIKA IZ SKRIPTE:
+- kontrolna matrica H,
+- uslov Hx^T = 0^T,
+- provera svih kontrolnih jednačina.
+
+IMPLEMENTACIJA U PROGRAMU:
+- vector<vector<int>> za matricu H,
+- petlje kroz redove i kolone,
+- XOR za sabiranje u binarnom polju.
+
+
+3.2. KODNO RASTOJANJE
+
+U delu 8.2.4 skripta definiše kodno rastojanje linearnog blok koda kao minimalnu Hammingovu težinu nenulte kodne reči:
+
+d(C) = min w_H(x), za x != 0 i x pripada C.
+
+Skripta takođe daje ekvivalentno svojstvo da je kodno rastojanje jednako minimalnom broju linearno zavisnih kolona kontrolne matrice H.
+
+U programu se kodno rastojanje određuje pretragom svih nenultih binarnih vektora, počevši od najmanje Hammingove težine. Za svaki vektor računa se sindrom. Prvi nenulti vektor sa sindromom jednakim nuli predstavlja kodnu reč najmanje težine, pa se njegova težina uzima kao kodno rastojanje.
+
+LOGIKA IZ SKRIPTE:
+- kodno rastojanje je minimalna težina nenulte kodne reči,
+- kodna reč ima sindrom jednak nuli.
+
+IMPLEMENTACIJA U PROGRAMU:
+- sistematska pretraga po rastućoj težini,
+- funkcija weight() određuje broj jedinica,
+- calculateSyndrome() proverava da li je sindrom jednak nuli.
+
+
+3.3. DEKODIRANJE POMOĆU SINDROMA
+
+U delu 8.2.5 skripta uvodi sindrom:
+
+s^T = H y^T
+
+gde je y primljena reč.
+
+Korektor e je vektor najmanje Hammingove težine za koji važi:
+
+H e^T = s^T
+
+Problem dekodiranja se zato svodi na pronalaženje korektora odgovarajućeg sindroma.
+
+Skripta za male kodove predlaže da se unapred formira tabela sindrom–korektor. Generišu se moguće greške e, računa se njihova Hammingova težina i njihov sindrom. Kada se određeni sindrom prvi put pojavi, odgovarajuća greška se upisuje kao korektor. Pošto se greške generišu rastućim Hammingovim težinama, prvi pronađeni korektor ima minimalnu težinu.
+
+U programu se ovo realizuje tako što se:
+1. prolazi kroz greške po rastućoj težini,
+2. za svaku grešku računa sindrom,
+3. proverava da li je sindrom već pronađen,
+4. ako nije, greška se upisuje kao njegov korektor.
+
+Korišćene su funkcije:
+- weight()
+- calculateSyndrome()
+- printSyndrome()
+- printError()
+
+LOGIKA IZ SKRIPTE:
+- sindrom se računa pomoću Hy^T ili He^T,
+- za svaki sindrom bira se korektor minimalne težine,
+- tabela se može unapred formirati za kratke kodove,
+- generisanje po rastućoj težini smanjuje nepotrebnu pretragu.
+
+IMPLEMENTACIJA U PROGRAMU:
+- niz corrector čuva korektore,
+- niz found označava koji su sindromi već pronađeni,
+- binarni vektori se predstavljaju pomoću int vrednosti i bitovskih operacija.
+
+
+3.4. LDPC KOD I KONSTRUKCIJA MATRICE H
+
+U odeljku 8.8 skripta uvodi LDPC kodove kao linearne blok kodove sa retkom kontrolnom matricom H.
+
+Za regularne LDPC kodove važi da svaki red matrice H sadrži wr jedinica, a svaka kolona wc jedinica.
+
+U odeljku 8.8.1 data je Gallagerova konstrukcija matrice H. Prva grupa redova formira se tako što se u svaki red postavi wr jedinica u odgovarajuće blokove kolona. Ostale grupe redova dobijaju se permutacijom kolona prve grupe.
+
+Program koristi upravo ovaj postupak.
+
+Prvo se formira prva grupa:
+
+for (int i = 0; i < groupRows; i++)
+    for (int j = 0; j < wr; j++)
+        H[i][i * wr + j] = 1;
+
+Na taj način se jedinice raspoređuju u blokove po wr elemenata.
+
+Zatim se za svaku narednu grupu kreira permutacija svih n kolona. Permutacija se generiše pomoću:
+
+mt19937 generator(seed);
+shuffle(permutation.begin(), permutation.end(), generator);
+
+i na osnovu nje se popunjava sledeća grupa redova.
+
+LOGIKA IZ SKRIPTE:
+- prva grupa redova,
+- wr jedinica po redu,
+- permutacija kolona prve grupe za naredne grupe,
+- sparse struktura matrice,
+- regularni LDPC uslov za težine redova i kolona.
+
+IMPLEMENTACIJA U PROGRAMU:
+- vector<vector<int>> za H,
+- mt19937 za generator,
+- shuffle za permutaciju,
+- seed je broj indeksa unet preko tastature.
+
+
+3.5. TANNEROV GRAF KAO OSNOVA ZA GALLAGER B
+
+Skripta za LDPC kodove uvodi Tannerov graf koji povezuje:
+- informacione čvorove x_j,
+- kontrolne čvorove c_i.
+
+Veza postoji kada je h_ij = 1.
+
+Program ne konstruiše eksplicitno Tannerov graf, ali koristi istu logiku preko matrice H. Proverom da je H[i][j] == 1 utvrđuje se da su čvor x_j i kontrolna jednačina c_i susedi.
+
+Ova struktura se koristi u Gallager B algoritmu.
+
+
+3.6. GALLAGER B ALGORITAM
+
+U odeljku 8.8.2 skripta opisuje iterativni Gallager A/B postupak.
+
+Početna vrednost informacionih čvorova je primljena reč:
+
+x^(0) = y
+
+U svakoj iteraciji svaki informacioni čvor razmenjuje poruke sa susednim kontrolnim čvorovima.
+
+Za kontrolni čvor c_i vrednost poruke koja se šalje čvoru x_j dobija se sabiranjem svih ostalih suseda, odnosno bez x_j, po modulu 2:
+
+w_i->j = suma x_l, za l iz N(c_i) bez x_j.
+
+U programu se to realizuje unutrašnjim petljama:
+
+for (int l = 0; l < n; l++) {
+    if (l != j && H[i][l] == 1) {
+        sum += x[l];
+    }
+}
+
+zatim:
+
+int message = sum % 2;
+
+Dobijena poruka može biti 0 ili 1. Program zatim za svaki x_j broji koliko je primljenih poruka bilo 0, a koliko 1:
+
+zeros++;
+ones++;
+
+Neka je broj suseda jednak neighbors. Tada se odluka donosi pomoću pragova th0 i th1, što direktno prati formulu iz skripte:
+
+if (zeros >= th0 * neighbors)
+    nextX[j] = 0;
+else if (ones >= th1 * neighbors)
+    nextX[j] = 1;
+else
+    nextX[j] = y[j];
+
+Dakle:
+- ako je dovoljno poruka 0, nova vrednost je 0,
+- ako je dovoljno poruka 1, nova vrednost je 1,
+- u suprotnom ostaje vrednost dobijena iz kanala y_j.
+
+Zaustavljanje se obavlja kada dobijeni vektor postane kodna reč:
+
+if (isCodeword(H, x))
+    return x;
+
+Skripta navodi da se algoritam obustavlja i nakon unapred određenog broja iteracija ako ne dostigne stanje u kome su sve kontrolne jednačine zadovoljene.
+
+U programu se zato koristi:
+
+maxIterations
+
+kao gornja granica broja iteracija.
+
+LOGIKA IZ SKRIPTE:
+- x^(0) = y,
+- razmena poruka između informacionih i kontrolnih čvorova,
+- računanje poruke bez trenutnog čvora,
+- brojanje nula i jedinica,
+- odlučivanje pomoću th0 i th1,
+- vraćanje y_j kada nijedan prag nije dostignut,
+- zaustavljanje kada je dobijena kodna reč,
+- prekid nakon maksimalnog broja iteracija.
+
+IMPLEMENTACIJA U PROGRAMU:
+- funkcija gallagerB(),
+- vektori x i nextX,
+- brojanje zeros i ones,
+- pragovi se prosleđuju kao parametri,
+- isCodeword() proverava uslov Hx^T = 0^T.
+
+
+4. KOMPLETAN TOK RADA PROGRAMA
+
+Program izvršava sledeće korake:
+
+1. Od korisnika se učitava broj indeksa i koristi kao seed.
+
+2. Kreira se matrica H dimenzija 9 × 15.
+
+3. Formira se prva grupa redova sa po 5 jedinica u svakom redu.
+
+4. Za naredne dve grupe vrši se pseudoslučajna permutacija kolona pomoću generatora sa fiksnim seed-om.
+
+5. Prikazuje se dobijena matrica H.
+
+6. Generišu se svi mogući binarni vektori greške.
+
+7. Greške se obrađuju po rastućoj Hammingovoj težini.
+
+8. Za svaku grešku računa se sindrom.
+
+9. Za svaki do tada nepoznat sindrom čuva se odgovarajući korektor.
+
+10. Prikazuje se tabela sindrom–korektor.
+
+11. Pretragom nenultih vektora određuje se kodno rastojanje.
+
+12. Od korisnika se učitava primljena reč y dužine 15 bitova.
+
+13. Učitavaju se pragovi th0 i th1 i maksimalan broj iteracija.
+
+14. Pokreće se Gallager B algoritam.
+
+15. Proverava se da li je rezultat kodna reč.
+
+16. Program zatim sistematski ispituje greške sve dok ne pronađe grešku najmanje težine za koju Gallager B ne uspeva da dobije nultu kodnu reč.
+
+
+5. PROVERE ULAZA
+
+Program proverava da primljena reč ima tačno 15 bitova.
+
+Ako dužina nije odgovarajuća, program prijavljuje:
+
+Received word must contain exactly 15 bits.
+
+Takođe se proverava da svaki karakter ulaza bude 0 ili 1.
+
+Na ovaj način sprečava se da se u algoritam dekodiranja prosledi neispravan binarni vektor.
+
+
+6. REZULTATI
+
+Za testiranje je korišćen broj indeksa:
+
+1002018
+
+Dobijena je matrica H:
+
+1 1 1 1 1 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 1 1 1 1 1 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 1 1 1 1 1
+0 0 0 1 0 0 1 0 0 1 1 1 0 0 0
+0 0 0 0 1 0 0 1 1 0 0 0 1 0 1
+1 1 1 0 0 1 0 0 0 0 0 0 0 1 0
+0 1 1 0 1 1 0 0 0 0 0 0 0 0 1
+1 0 0 1 0 0 1 0 0 0 0 0 1 1 0
+0 0 0 0 0 0 0 1 1 1 1 1 0 0 0
+
+Matrica je dimenzija 9 × 15 i konstruisana je korišćenjem parametara n = 15, n-k = 9, wr = 5 i wc = 3.
+
+
+6.1. TABELA SINDROM–KOREKTOR
+
+Program generiše tabelu svih 9-bitnih sindroma.
+
+Za sindrome koji se mogu dobiti iz generisanih vektora upisuje se odgovarajući korektor, dok se za sindrome koji nisu pronađeni prikazuje:
+
+Not available
+
+Prvi pronađeni korektor za određeni sindrom je korektor najmanje pronađene Hammingove težine, jer se greške obrađuju po rastućoj težini.
+
+
+6.2. KODNO RASTOJANJE
+
+Program je dobio:
+
+Code distance: 2
+
+Vrednost je dobijena traženjem najmanje težine nenultog vektora koji ima sindrom jednak nuli.
+
+
+6.3. GALLAGER B DEKODIRANJE
+
+Za test dekodiranja korišćena je primljena reč:
+
+y = 000000000000000
+
+a pragovi:
+
+th0 = 0.5
+th1 = 0.5
+
+Maksimalni broj iteracija:
+
+100
+
+Rezultat je:
+
+Gallager B result:
+000000000000000
+
+Program zatim potvrđuje:
+
+Result is a codeword.
+
+
+6.4. NAJMANJA GREŠKA ZA KOJU GALLAGER B NE USPEVA
+
+Program je sistematskom pretragom pronašao:
+
+Minimum error weight: 1
+
+Error vector e:
+
+000000000000001
+
+Dobijeni rezultat Gallager B algoritma je:
+
+111001100011111
+
+Pošto rezultat nije nulta kodna reč, za ovu grešku Gallager B sa:
+
+th0 = 0.5
+th1 = 0.5
+
+nije uspeo da izvrši uspešno dekodiranje nulte kodne reči.
+
+Poređenje sa kodnim rastojanjem:
+
+Error weight = 1 < Code distance = 2
+
+Ovaj rezultat pokazuje da je za konkretnu implementaciju i konkretno izabrane pragove pronađena greška težine 1 koju Gallager B ne ispravlja.
+
+
+7. ZAKLJUČAK
+
+U okviru ovog zadatka implementiran je LDPC kod za zadate parametre:
+
+n = 15
+n-k = 9
+wr = 5
+wc = 3
+
+Matrica H konstruiše se prema Gallagerovom postupku iz predmetne skripte. Prva grupa redova formira se raspoređivanjem wr jedinica, dok se naredne grupe dobijaju pseudoslučajnom permutacijom kolona uz seed jednak broju indeksa.
+
+Na osnovu matrice H generisana je tabela sindroma i korektora. Vektori grešaka obrađuju se po rastućoj Hammingovoj težini, čime se obezbeđuje da se za dati sindrom prvo pronađe korektor najmanje težine.
+
+Kodno rastojanje je određeno pretragom najmanje težine nenulte vektorske reči sa sindromom jednakim nuli i za konkretnu matricu iznosi:
+
+d(C) = 2
+
+Implementiran je i Gallager B algoritam. Njegova logika prati postupak iz skripte: početna vrednost je primljena reč, zatim se kroz kontrolne čvorove računaju poruke, broje se nule i jedinice i nova vrednost se određuje na osnovu pragova th0 i th1. Algoritam se zaustavlja kada se dobije kodna reč ili kada se dostigne maksimalan broj iteracija.
+
+Za pragove:
+
+th0 = th1 = 0.5
+
+pronađen je vektor greške težine 1:
+
+000000000000001
+
+za koji Gallager B ne uspeva da izvrši uspešno dekodiranje nulte kodne reči.
+
+Na taj način realizovani su svi traženi delovi zadatka: konstrukcija LDPC matrice H, tabela sindroma i korektora, određivanje kodnog rastojanja, Gallager B dekodiranje i određivanje najmanje greške za koju algoritam ne uspeva.

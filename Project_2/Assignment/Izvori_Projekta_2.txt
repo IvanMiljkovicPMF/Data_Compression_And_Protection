@@ -1,0 +1,12 @@
+Za proučavanje algoritama i razvoj implementacije korišćeni su sledeći izvori:
+
+1. M. D. Petković – Teorija informacija i kodiranje, odeljci 8.2.3, 8.2.4, 8.2.5, 8.8.1 i 8.8.2.
+
+2. cppreference – Arithmetic operators, za bitovske operacije korišćene u implementaciji.
+https://en.cppreference.com/cpp/language/operator_arithmetic
+
+3. cppreference – std::shuffle, za generisanje pseudoslučajnih permutacija.
+https://en.cppreference.com/cpp/algorithm/shuffle
+
+4. cppreference – std::mersenne_twister_engine / std::mt19937, za korišćenje generatora pseudoslučajnih brojeva sa fiksnim seed-om.
+https://en.cppreference.com/cpp/numeric/random/mersenne_twister_engine

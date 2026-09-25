@@ -1,0 +1,43 @@
+UPUTSTVO ZA POKRETANJE – ZADATAK
+
+1. Otvoriti fajl Project_2.sln u programu Microsoft Visual Studio.
+
+2. U Visual Studio-u izabrati:
+   Build pa onda Build Solution
+
+3. U Solution Explorer-u pronaći projekat Assignment.
+
+4. Kliknuti desnim klikom na projekat Assignment.
+
+5. Izabrati:
+   Debug pa onda Start Without Debugging
+
+6. Program će se pokrenuti u konzolnom prozoru.
+
+7. Program prvo traži broj indeksa koji se koristi kao seed za generisanje LDPC matrice H.
+   Za indeks (moj indeks 100/2018) uneti:
+   100
+
+8. Program prikazuje generisanu matricu H.
+
+9. Program zatim formira syndrome/corrector tabelu i prikazuje code distance.
+
+10. Program traži primljenu reč y od 15 bitova.
+    Uneti 15 bitova bez razmaka, na primer:
+    000000000000000
+
+11. Uneti vrednosti:
+    th0
+    th1
+    maxIterations
+
+    Za zadatak 4 koristiti:
+    th0 = 0.5
+    th1 = 0.5
+
+12. Program prikazuje rezultat Gallager B dekodiranja i proveru da li je rezultat codeword.
+
+13. Na kraju program automatski izvršava i prikazuje:
+    minimum error weight
+    error vector e
+    Gallager B result
