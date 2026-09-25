@@ -41,7 +41,7 @@ Project_1/
 
 ## Project_2
 
-U direktorijumu `Project_2` nalaze se 1 zadatak:
+U direktorijumu `Project_2` nalazi se 1 zadatak:
 
 U `Assignment` direktorijumu nalaze se fajlovi:
 
