@@ -45,9 +45,9 @@ U direktorijumu `Project_2` nalazi se 1 zadatak:
 
 U `Assignment` direktorijumu nalaze se fajlovi:
 
-* `Izveštaj_Zadatak_<broj>` – izveštaj za dati zadatak
-* `Izvori_Zadatak_<broj>` – izvori korišćeni za izradu zadatka
-* `Uputstvo_Za_Pokretanje_Zadatak_<broj>` – uputstvo za pokretanje programa
+* `Izveštaj_Projekta_2` – izveštaj za dati zadatak
+* `Izvori_Projekta_2` – izvori korišćeni za izradu zadatka
+* `Uputstvo_Za_Pokretanje_Projekta_2` – uputstvo za pokretanje programa
 
 ### Struktura Project_2
 
