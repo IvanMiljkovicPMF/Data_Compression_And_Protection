@@ -9,4 +9,8 @@ https://github.com/to-xibalba/lz77-algorithm
 3. GeeksforGeeks – LZW (Lempel-Ziv-Welch) Compression Technique
 https://www.geeksforgeeks.org/computer-networks/lzw-lempel-ziv-welch-compression-technique/
 
-4. Predmetne prezentacije i knjige korišćene su kao dodatna literatura.
+4. cppreference.com – C++ Standard Library
+Korišćen je kao dokumentacija za standardne C++ funkcionalnosti korišćene tokom implementacije programa, kao što su rad sa fajlovima, stringovima, vektorima, mapama i ulazno-izlaznim operacijama.
+https://en.cppreference.com/cpp/standard_library
+
+5. Predmetne prezentacije i knjige korišćene su kao dodatna literatura.
