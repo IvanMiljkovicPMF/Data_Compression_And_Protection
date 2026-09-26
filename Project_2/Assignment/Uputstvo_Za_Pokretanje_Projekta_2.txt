@@ -60,5 +60,3 @@ Enter received word y (15 bits): 000000000000001
 Enter th0: 0.5
 Enter th1: 0.5
 Enter maximum number of iterations: 100
-
-Za dati primer program najpre izvršava syndrome decoding, a zatim Gallager B dekodiranje.
