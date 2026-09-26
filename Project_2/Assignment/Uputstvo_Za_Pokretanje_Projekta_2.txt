@@ -1,4 +1,4 @@
-UPUTSTVO ZA POKRETANJE – ZADATAK
+UPUTSTVO ZA POKRETANJE – PROJEKAT 2
 
 1. Otvoriti fajl Project_2.sln u programu Microsoft Visual Studio.
 
@@ -15,8 +15,8 @@ UPUTSTVO ZA POKRETANJE – ZADATAK
 6. Program će se pokrenuti u konzolnom prozoru.
 
 7. Program prvo traži broj indeksa koji se koristi kao seed za generisanje LDPC matrice H.
-   Za indeks (moj indeks 100/2018) uneti:
-   100
+   Za indeks 100/2018 uneti:
+   1002018
 
 8. Program prikazuje generisanu matricu H.
 
@@ -24,9 +24,14 @@ UPUTSTVO ZA POKRETANJE – ZADATAK
 
 10. Program traži primljenu reč y od 15 bitova.
     Uneti 15 bitova bez razmaka, na primer:
-    000000000000000
+    000000000000001
 
-11. Uneti vrednosti:
+11. Program izvršava syndrome decoding i prikazuje:
+    - syndrome
+    - corrector
+    - decoded codeword
+
+12. Program zatim traži vrednosti:
     th0
     th1
     maxIterations
@@ -35,9 +40,25 @@ UPUTSTVO ZA POKRETANJE – ZADATAK
     th0 = 0.5
     th1 = 0.5
 
-12. Program prikazuje rezultat Gallager B dekodiranja i proveru da li je rezultat codeword.
+    Za maksimalan broj iteracija može se uneti:
+    100
 
-13. Na kraju program automatski izvršava i prikazuje:
-    minimum error weight
-    error vector e
-    Gallager B result
+13. Program prikazuje rezultat Gallager B dekodiranja i proveru da li je rezultat codeword.
+
+14. Na kraju program automatski izvršava deo zadatka 4 i prikazuje:
+    - minimum error weight
+    - error vector e
+    - Gallager B result
+    - th0
+    - th1
+    - poređenje težine greške sa code distance
+
+Primer kompletnog unosa:
+
+Enter your index number: 1002018
+Enter received word y (15 bits): 000000000000001
+Enter th0: 0.5
+Enter th1: 0.5
+Enter maximum number of iterations: 100
+
+Za dati primer program najpre izvršava syndrome decoding, a zatim Gallager B dekodiranje.

@@ -2,7 +2,6 @@ PROJEKAT 2 – KOMPRESIJA I ZAŠTITA PODATAKA
 
 ZADATAK – LDPC KOD, DEKODIRANJE POMOĆU SINDROMA I GALLAGER B ALGORITAM
 
-
 1. CILJ ZADATKA
 
 Cilj zadatka je generisanje LDPC koda za zadate parametre, formiranje tabele sindroma i korektora, određivanje kodnog rastojanja i implementacija Gallager B algoritma za dekodiranje.
@@ -18,14 +17,12 @@ Prema zahtevu zadatka, za generisanje narednih grupa redova koristi se standardn
 
 U programu se, pored konstrukcije i prikaza matrice H, vrši:
 - generisanje tabele sindroma i korektora,
+- dekodiranje primljene reči pomoću sindroma i tabele korektora,
 - određivanje kodnog rastojanja,
 - Gallager B dekodiranje primljene reči,
 - pronalaženje najmanjeg broja grešaka za koji Gallager B sa pragovima th0 = th1 = 0.5 ne uspeva da izvrši uspešno dekodiranje.
 
-Za testiranje je korišćen broj indeksa:
-
-1002018
-
+Za testiranje je korišćen broj indeksa: 1002018
 
 2. KORIŠĆENE BIBLIOTEKE
 
@@ -37,7 +34,7 @@ Za implementaciju su korišćene standardne C++ biblioteke:
 #include <random>
 #include <string>
 
-iostream – koristi se za unos parametara i prikaz matrice, tabele sindroma, rezultata kodnog rastojanja i Gallager B dekodiranja.
+iostream – koristi se za unos parametara i prikaz matrice, tabele sindroma, rezultata kodnog rastojanja, sindromskog dekodiranja i Gallager B dekodiranja.
 
 vector – koristi se za predstavljanje matrice H i binarnih vektora.
 
@@ -47,11 +44,9 @@ random – koristi se za generator pseudoslučajnih brojeva mt19937.
 
 string – koristi se za unos primljene binarne reči kao tekstualnog niza.
 
-
 3. LOGIKA ALGORITMA PREUZETA IZ SKRIPTE
 
 Glavna algoritamska logika programa prati odgovarajuće delove predmetne skripte „Teorija informacija i kodiranje“. Skripta daje teorijsku osnovu za kontrolnu matricu, kodno rastojanje, dekodiranje pomoću sindroma, konstrukciju LDPC koda i Gallager B algoritam. Konkretna sintaksa programa i način čuvanja podataka predstavljaju C++ implementaciju tih postupaka.
-
 
 3.1. KONTROLNA MATRICA H
 
@@ -77,7 +72,6 @@ IMPLEMENTACIJA U PROGRAMU:
 - petlje kroz redove i kolone,
 - XOR za sabiranje u binarnom polju.
 
-
 3.2. KODNO RASTOJANJE
 
 U delu 8.2.4 skripta definiše kodno rastojanje linearnog blok koda kao minimalnu Hammingovu težinu nenulte kodne reči:
@@ -96,7 +90,6 @@ IMPLEMENTACIJA U PROGRAMU:
 - sistematska pretraga po rastućoj težini,
 - funkcija weight() određuje broj jedinica,
 - calculateSyndrome() proverava da li je sindrom jednak nuli.
-
 
 3.3. DEKODIRANJE POMOĆU SINDROMA
 
@@ -135,8 +128,13 @@ LOGIKA IZ SKRIPTE:
 IMPLEMENTACIJA U PROGRAMU:
 - niz corrector čuva korektore,
 - niz found označava koji su sindromi već pronađeni,
+- funkcija syndromeDecoding() koristi sindrom primljene reči da pronađe odgovarajući korektor i formira dekodiranu kodnu reč,
 - binarni vektori se predstavljaju pomoću int vrednosti i bitovskih operacija.
 
+Nakon formiranja tabele sindrom–korektor, program za unetu primljenu reč y izvršava i konkretno
+dekodiranje pomoću sindroma. Najpre se računa s = Hy^T, zatim se iz tabele uzima korektor
+najmanje težine e = e_min(s), a na kraju se dobija dekodirana kodna reč x = y - e.
+Pošto se radi sa binarnim vrednostima, korekcija se u programu realizuje pomoću XOR operacije.
 
 3.4. LDPC KOD I KONSTRUKCIJA MATRICE H
 
@@ -150,9 +148,11 @@ Program koristi upravo ovaj postupak.
 
 Prvo se formira prva grupa:
 
-for (int i = 0; i < groupRows; i++)
-    for (int j = 0; j < wr; j++)
+for (int i = 0; i < groupRows; i++) {
+    for (int j = 0; j < wr; j++) {
         H[i][i * wr + j] = 1;
+    }
+}
 
 Na taj način se jedinice raspoređuju u blokove po wr elemenata.
 
@@ -176,7 +176,6 @@ IMPLEMENTACIJA U PROGRAMU:
 - shuffle za permutaciju,
 - seed je broj indeksa unet preko tastature.
 
-
 3.5. TANNEROV GRAF KAO OSNOVA ZA GALLAGER B
 
 Skripta za LDPC kodove uvodi Tannerov graf koji povezuje:
@@ -189,14 +188,11 @@ Program ne konstruiše eksplicitno Tannerov graf, ali koristi istu logiku preko 
 
 Ova struktura se koristi u Gallager B algoritmu.
 
-
 3.6. GALLAGER B ALGORITAM
 
 U odeljku 8.8.2 skripta opisuje iterativni Gallager A/B postupak.
 
-Početna vrednost informacionih čvorova je primljena reč:
-
-x^(0) = y
+Početna vrednost informacionih čvorova je primljena reč: x^(0) = y
 
 U svakoj iteraciji svaki informacioni čvor razmenjuje poruke sa susednim kontrolnim čvorovima.
 
@@ -212,9 +208,7 @@ for (int l = 0; l < n; l++) {
     }
 }
 
-zatim:
-
-int message = sum % 2;
+zatim: int message = sum % 2;
 
 Dobijena poruka može biti 0 ili 1. Program zatim za svaki x_j broji koliko je primljenih poruka bilo 0, a koliko 1:
 
@@ -223,12 +217,15 @@ ones++;
 
 Neka je broj suseda jednak neighbors. Tada se odluka donosi pomoću pragova th0 i th1, što direktno prati formulu iz skripte:
 
-if (zeros >= th0 * neighbors)
+if (zeros >= th0 * neighbors){
     nextX[j] = 0;
-else if (ones >= th1 * neighbors)
+}
+else if (ones >= th1 * neighbors){
     nextX[j] = 1;
-else
+}
+else{
     nextX[j] = y[j];
+}
 
 Dakle:
 - ako je dovoljno poruka 0, nova vrednost je 0,
@@ -237,14 +234,13 @@ Dakle:
 
 Zaustavljanje se obavlja kada dobijeni vektor postane kodna reč:
 
-if (isCodeword(H, x))
+if (isCodeword(H, x)){
     return x;
+}
 
 Skripta navodi da se algoritam obustavlja i nakon unapred određenog broja iteracija ako ne dostigne stanje u kome su sve kontrolne jednačine zadovoljene.
 
-U programu se zato koristi:
-
-maxIterations
+U programu se zato koristi: maxIterations
 
 kao gornja granica broja iteracija.
 
@@ -264,7 +260,6 @@ IMPLEMENTACIJA U PROGRAMU:
 - brojanje zeros i ones,
 - pragovi se prosleđuju kao parametri,
 - isCodeword() proverava uslov Hx^T = 0^T.
-
 
 4. KOMPLETAN TOK RADA PROGRAMA
 
@@ -294,14 +289,15 @@ Program izvršava sledeće korake:
 
 12. Od korisnika se učitava primljena reč y dužine 15 bitova.
 
-13. Učitavaju se pragovi th0 i th1 i maksimalan broj iteracija.
+13. Za primljenu reč računa se sindrom i na osnovu njega iz tabele se pronalazi korektor, nakon čega se formira dekodirana kodna reč.
 
-14. Pokreće se Gallager B algoritam.
+14. Učitavaju se pragovi th0 i th1 i maksimalan broj iteracija.
 
-15. Proverava se da li je rezultat kodna reč.
+15. Pokreće se Gallager B algoritam.
 
-16. Program zatim sistematski ispituje greške sve dok ne pronađe grešku najmanje težine za koju Gallager B ne uspeva da dobije nultu kodnu reč.
+16. Proverava se da li je rezultat kodna reč.
 
+17. Program zatim sistematski ispituje greške sve dok ne pronađe grešku najmanje težine za koju Gallager B ne uspeva da dobije nultu kodnu reč.
 
 5. PROVERE ULAZA
 
@@ -315,12 +311,9 @@ Takođe se proverava da svaki karakter ulaza bude 0 ili 1.
 
 Na ovaj način sprečava se da se u algoritam dekodiranja prosledi neispravan binarni vektor.
 
-
 6. REZULTATI
 
-Za testiranje je korišćen broj indeksa:
-
-1002018
+Za testiranje je korišćen broj indeksa: 1002018
 
 Dobijena je matrica H:
 
@@ -336,7 +329,6 @@ Dobijena je matrica H:
 
 Matrica je dimenzija 9 × 15 i konstruisana je korišćenjem parametara n = 15, n-k = 9, wr = 5 i wc = 3.
 
-
 6.1. TABELA SINDROM–KOREKTOR
 
 Program generiše tabelu svih 9-bitnih sindroma.
@@ -347,7 +339,6 @@ Not available
 
 Prvi pronađeni korektor za određeni sindrom je korektor najmanje pronađene Hammingove težine, jer se greške obrađuju po rastućoj težini.
 
-
 6.2. KODNO RASTOJANJE
 
 Program je dobio:
@@ -356,31 +347,46 @@ Code distance: 2
 
 Vrednost je dobijena traženjem najmanje težine nenultog vektora koji ima sindrom jednak nuli.
 
+6.2.1. DEKODIRANJE POMOĆU SINDROMA
+
+Pored generisanja tabele sindrom–korektor, program sada koristi tabelu i za
+dekodiranje konkretne primljene reči.
+
+Za dodatni test korišćena je primljena reč: y = 000000000000001
+
+Program je izračunao:
+
+Syndrome: 001010100
+
+Za ovaj sindrom pronađen je korektor:
+
+Corrector: 000000000000001
+
+Nakon primene korektora dobijena je dekodirana kodna reč:
+
+Decoded codeword: 000000000000000
+
+Na ovaj način je poslednji bit primljene reči ispravljen i dobijena je nulta kodna reč.
+Ovaj postupak odgovara dekodiranju pomoću sindroma iz odeljka 8.2.5 skripte.
 
 6.3. GALLAGER B DEKODIRANJE
 
-Za test dekodiranja korišćena je primljena reč:
-
-y = 000000000000000
+Za test dekodiranja korišćena je primljena reč: y = 000000000000000
 
 a pragovi:
 
 th0 = 0.5
 th1 = 0.5
 
-Maksimalni broj iteracija:
-
-100
+Maksimalni broj iteracija: 100
 
 Rezultat je:
 
-Gallager B result:
-000000000000000
+Gallager B result: 000000000000000
 
 Program zatim potvrđuje:
 
 Result is a codeword.
-
 
 6.4. NAJMANJA GREŠKA ZA KOJU GALLAGER B NE USPEVA
 
@@ -388,13 +394,9 @@ Program je sistematskom pretragom pronašao:
 
 Minimum error weight: 1
 
-Error vector e:
+Error vector e: 000000000000001
 
-000000000000001
-
-Dobijeni rezultat Gallager B algoritma je:
-
-111001100011111
+Dobijeni rezultat Gallager B algoritma je: 111001100011111
 
 Pošto rezultat nije nulta kodna reč, za ovu grešku Gallager B sa:
 
@@ -403,12 +405,9 @@ th1 = 0.5
 
 nije uspeo da izvrši uspešno dekodiranje nulte kodne reči.
 
-Poređenje sa kodnim rastojanjem:
-
-Error weight = 1 < Code distance = 2
+Poređenje sa kodnim rastojanjem: Error weight = 1 < Code distance = 2
 
 Ovaj rezultat pokazuje da je za konkretnu implementaciju i konkretno izabrane pragove pronađena greška težine 1 koju Gallager B ne ispravlja.
-
 
 7. ZAKLJUČAK
 
@@ -421,21 +420,15 @@ wc = 3
 
 Matrica H konstruiše se prema Gallagerovom postupku iz predmetne skripte. Prva grupa redova formira se raspoređivanjem wr jedinica, dok se naredne grupe dobijaju pseudoslučajnom permutacijom kolona uz seed jednak broju indeksa.
 
-Na osnovu matrice H generisana je tabela sindroma i korektora. Vektori grešaka obrađuju se po rastućoj Hammingovoj težini, čime se obezbeđuje da se za dati sindrom prvo pronađe korektor najmanje težine.
+Na osnovu matrice H generisana je tabela sindroma i korektora. Vektori grešaka obrađuju se po rastućoj Hammingovoj težini, čime se obezbeđuje da se za dati sindrom prvo pronađe korektor najmanje težine. Tabela se zatim koristi i za dekodiranje primljene reči pomoću sindroma: računa se s = Hy^T, pronalazi se korektor e_min(s) i formira dekodirana kodna reč x = y - e.
 
-Kodno rastojanje je određeno pretragom najmanje težine nenulte vektorske reči sa sindromom jednakim nuli i za konkretnu matricu iznosi:
-
-d(C) = 2
+Kodno rastojanje je određeno pretragom najmanje težine nenulte vektorske reči sa sindromom jednakim nuli i za konkretnu matricu iznosi: d(C) = 2
 
 Implementiran je i Gallager B algoritam. Njegova logika prati postupak iz skripte: početna vrednost je primljena reč, zatim se kroz kontrolne čvorove računaju poruke, broje se nule i jedinice i nova vrednost se određuje na osnovu pragova th0 i th1. Algoritam se zaustavlja kada se dobije kodna reč ili kada se dostigne maksimalan broj iteracija.
 
-Za pragove:
+Za pragove: th0 = th1 = 0.5
 
-th0 = th1 = 0.5
-
-pronađen je vektor greške težine 1:
-
-000000000000001
+pronađen je vektor greške težine 1: 000000000000001
 
 za koji Gallager B ne uspeva da izvrši uspešno dekodiranje nulte kodne reči.
 

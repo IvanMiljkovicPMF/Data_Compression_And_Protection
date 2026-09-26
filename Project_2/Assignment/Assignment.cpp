@@ -67,6 +67,58 @@ bool isCodeword(const vector<vector<int>>& H, const vector<int>& x) {
     return true;
 }
 
+vector<int> syndromeDecoding(const vector<vector<int>>& H, const vector<int>& y, const vector<int>& corrector, const vector<bool>& found) {
+    int syndrome = 0;
+
+    for (int i = 0; i < nk; i++) {
+        int value = 0;
+
+        for (int j = 0; j < n; j++) {
+            if (H[i][j] == 1) {
+                value ^= y[j];
+            }
+        }
+
+        if (value == 1) {
+            syndrome |= (1 << (nk - 1 - i));
+        }
+    }
+
+    cout << "\nSyndrome decoding:\n";
+
+    cout << "Syndrome: ";
+    printSyndrome(syndrome);
+    cout << endl;
+
+    if (!found[syndrome]) {
+        cout << "Corrector not available for this syndrome." << endl;
+        return {};
+    }
+
+    int error = corrector[syndrome];
+
+    cout << "Corrector: ";
+    printError(error);
+    cout << endl;
+
+    vector<int> decoded(n);
+
+    for (int i = 0; i < n; i++) {
+        int errorBit = (error >> (n - 1 - i)) & 1;
+        decoded[i] = y[i] ^ errorBit;
+    }
+
+    cout << "Decoded codeword: ";
+
+    for (int bit : decoded) {
+        cout << bit;
+    }
+
+    cout << endl;
+
+    return decoded;
+}
+
 vector<int> gallagerB(const vector<vector<int>>& H, const vector<int>& y, double th0, double th1, int maxIterations) {
     vector<int> x = y;
     vector<int> nextX(n);
@@ -321,6 +373,8 @@ int main() {
 
         y[i] = yInput[i] - '0';
     }
+
+    syndromeDecoding(H, y, corrector, found);
 
     double th0;
     double th1;
